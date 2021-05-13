@@ -1,4 +1,4 @@
-const path = require("path");
+//const path = require("path");
 require("dotenv").config();
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 const INFURA_API_KEY = process.env.INFURA_API_KEY;
@@ -12,7 +12,8 @@ const endpoints = {
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
-  contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  //contracts_build_directory: path.join(__dirname, "client/src/contracts"),
+  contracts_build_directory: "./build/contracts",
   networks: {
     //develop on Ganache check your config
     develop: {
