@@ -1,17 +1,43 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { generateStore, Drizzle } from '@drizzle/store';
+import { drizzleReactHooks } from '@drizzle/react-plugin';
+import contractEventNotifier from "./middleware";
+import drizzleOptions from "./utils/drizzleOptions";
+import reducer from "./redux/reducer";
+import { ThemeProvider } from '@material-ui/styles';
+import theme from './theme';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+
+const appMiddlewares = [ contractEventNotifier ]
+
+const store = generateStore(({
+  drizzleOptions,
+  appReducers: {appStore: reducer},
+  appMiddlewares,
+  disableReduxdevTools: false,
+}))
+
+const drizzle = new Drizzle(drizzleOptions, store);
+const { DrizzleProvider, Initializer } = drizzleReactHooks;
+
+const rootReactElement = (
+    <DrizzleProvider drizzle={drizzle}>
+      
+      <Initializer
+      error="There was an error."
+      loadingContractsAndAccounts="loading contracts & accounts..."
+      loadingWeb3="loading web3..."
+    >
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+         
+      </Initializer>
+    </DrizzleProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const target = document.getElementById("root");
+render(rootReactElement, target);
