@@ -1,9 +1,14 @@
 import {useState} from 'react'; 
-import { generateStore, Drizzle } from '@drizzle/store';
+import { Route } from 'react-router-dom';
 import { Container, Box } from '@material-ui/core';
 import { drizzleReactHooks} from '@drizzle/react-plugin';
 import {changeName} from './redux/action';
-import Header from "./Header.js";
+import Feed from './components/Feed';
+import Home from './components/Home';
+import MyMind from './components/MyMind';
+import Profile from './components/Profile';
+
+import Header from "./components/Header";
 import './App.css';
 
 
@@ -20,12 +25,18 @@ function App() {
     drizzle.store.dispatch(changeName(input))
   }
   return (
-    <Container className="App" maxWidth="m">
+    <Container className="App" maxWidth="lg">
       <Header />
       <Box>
         <input type='text' value={input} onChange={handleChange}></input>
         <button onClick={handleSubmit}>Click change name</button>
       </Box>
+      <div className="mt-4">
+        <Route exact path="/" component={Home} />
+        <Route exact path="/Feed" component={Feed} />
+        <Route exact path="/MyMind" component={MyMind} />
+        <Route path="/Profile" component={Profile} />
+      </div>
 
     </Container>
   );

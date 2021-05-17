@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { BrowserRouter } from "react-router-dom";
 import { generateStore, Drizzle } from '@drizzle/store';
 import { drizzleReactHooks } from '@drizzle/react-plugin';
 import contractEventNotifier from "./middleware";
@@ -24,8 +25,8 @@ const drizzle = new Drizzle(drizzleOptions, store);
 const { DrizzleProvider, Initializer } = drizzleReactHooks;
 
 const rootReactElement = (
+  <BrowserRouter>
     <DrizzleProvider drizzle={drizzle}>
-      
       <Initializer
       error="There was an error."
       loadingContractsAndAccounts="loading contracts & accounts..."
@@ -34,9 +35,9 @@ const rootReactElement = (
         <ThemeProvider theme={theme}>
           <App />
         </ThemeProvider>
-         
       </Initializer>
     </DrizzleProvider>
+  </BrowserRouter>
 );
 
 const target = document.getElementById("root");
