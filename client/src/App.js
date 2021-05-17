@@ -13,8 +13,7 @@ import './App.css';
 
 
 function App() {
-  const { useDrizzle, useDrizzleState } = drizzleReactHooks;
-  const drizzleState = useDrizzleState(state => ({...state}));
+  const { useDrizzle} = drizzleReactHooks;
   const {drizzle} = useDrizzle();
 
   const [input, setInput] = useState('init');
