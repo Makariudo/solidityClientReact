@@ -7,7 +7,6 @@ import Feed from './components/Feed';
 import Home from './components/Home';
 import MyMind from './components/MyMind';
 import Profile from './components/Profile';
-
 import Header from "./components/Header";
 import './App.css';
 
@@ -36,7 +35,6 @@ function App() {
         <Route exact path="/MyMind" component={MyMind} />
         <Route path="/Profile" component={Profile} />
       </div>
-
     </Container>
   );
 }

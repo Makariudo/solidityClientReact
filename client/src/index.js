@@ -3,7 +3,8 @@ import { render } from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import { generateStore, Drizzle } from '@drizzle/store';
 import { drizzleReactHooks } from '@drizzle/react-plugin';
-import contractEventNotifier from "./middleware";
+import contractEventNotifier from "./eventMW";
+import interactProvider from './redux/interactMW';
 import drizzleOptions from "./utils/drizzleOptions";
 import reducer from "./redux/reducer";
 import { ThemeProvider } from '@material-ui/styles';
@@ -12,7 +13,7 @@ import './index.css';
 import App from './App';
 
 
-const appMiddlewares = [ contractEventNotifier ]
+const appMiddlewares = [ contractEventNotifier, interactProvider ]
 
 const store = generateStore(({
   drizzleOptions,
