@@ -1,7 +1,7 @@
 
 import { SUBSCRIBE_ALL_ENTRIES, seedAllEntries, seedCounter, fetchAllEntries, FETCH_ALL_ENTRIES } from './action';
 
-const subscribeMW = store => next => async action => {
+const subscribeMW = store => next => action => {
   
   switch (action.type) {
     /*******************************/
@@ -12,11 +12,9 @@ const subscribeMW = store => next => async action => {
       const nbMinds = state.appStore.ui.nbminds ?? 0;
       const {drizzle}  = action;
       const contract = drizzle.contracts.MindPin;
-      const dataKeyNbEntries = await contract.methods.counter.cacheCall();
-      const data = await state.contracts.MindPin?.counter[dataKeyNbEntries]?.value;
+      const dataKeyNbEntries = contract.methods.counter.cacheCall();
+      const data = state.contracts.MindPin?.counter[dataKeyNbEntries]?.value;
       if(data !== nbMinds){
-        console.log('nbMinds init:', nbMinds);
-        console.log('nbMinds new:', data);
         store.dispatch(seedCounter(parseInt(data, 10)));
         store.dispatch(fetchAllEntries(nbMinds,data, drizzle))
       }
@@ -34,13 +32,12 @@ const subscribeMW = store => next => async action => {
       const numberFetch = newNb-oldNb;
       const contract = drizzle.contracts.MindPin;
       for(let i=oldNb+1; i<= numberFetch; i++){
-        const dataKeyNbEntries = await contract.methods.NumStates.cacheCall(i);
-        const data = await state.contracts.MindPin?.NumStates[dataKeyNbEntries]?.value;
+        const dataKeyNbEntries = contract.methods.NumStates.cacheCall(i);
+        const data = state.contracts.MindPin?.NumStates[dataKeyNbEntries]?.value;
         if(data){
           res = [...res, data]
         }
       }
-      console.log('tableau de sortie', res);
       res.length>=1 && store.dispatch(seedAllEntries(res));
       next(action)
       break;
