@@ -14,6 +14,8 @@ function MyMind() {
   const handleSubmit = () => {
     drizzle.store.dispatch(setMind(input, drizzle))
   }
+
+  
 ///test1
 /*   const subscribeData = useCallback(async () => {
     //recup de la clé d'abonnement
@@ -29,19 +31,21 @@ subscribeData();
 }, [subscribeData]);  */
 
 ///test2
-const subscribeAddressEntries = useCallback(async () => {
+/* const subscribeAddressEntries = useCallback(async () => {
   //recup de la clé d'abonnement
-  console.log(drizzleState.accounts[0])
+ console.log(drizzleState.accounts[0])
  const dataKey = await drizzle.contracts.MindPin.methods.AddressEntries.cacheCall(drizzleState.accounts[0]);
  console.log("dataKey", dataKey)
   //recup de la value
- const data = await drizzleState.contracts.MindPin.AddressEntries[dataKey].value;
+ const data = await drizzleState.contracts.MindPin?.AddressEntries[dataKey]?.value;
  console.log('data', data)
-},[drizzleState.contracts.MindPin.AddressEntries])
+},[drizzleState, drizzle ])
 
 useEffect(() => {
-  subscribeAddressEntries();
-  }, [subscribeAddressEntries]); 
+  if(drizzleState.drizzleStatus.initialized){
+    subscribeAddressEntries();
+  }
+  }, [drizzleState, subscribeAddressEntries]);  */
 
 
   

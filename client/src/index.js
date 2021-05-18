@@ -5,6 +5,7 @@ import { generateStore, Drizzle } from '@drizzle/store';
 import { drizzleReactHooks } from '@drizzle/react-plugin';
 import contractEventNotifier from "./eventMW";
 import interactProvider from './redux/interactMW';
+import subscribeMW from './redux/subscribeMW';
 import drizzleOptions from "./utils/drizzleOptions";
 import reducer from "./redux/reducer";
 import { ThemeProvider } from '@material-ui/styles';
@@ -13,7 +14,7 @@ import './index.css';
 import App from './App';
 
 
-const appMiddlewares = [ contractEventNotifier, interactProvider ]
+const appMiddlewares = [ contractEventNotifier, interactProvider, subscribeMW ]
 
 const store = generateStore(({
   drizzleOptions,

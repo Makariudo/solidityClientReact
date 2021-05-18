@@ -1,34 +1,35 @@
-import {useState} from 'react'; 
+import {useState, useEffect, useCallback } from 'react'; 
 import { Route } from 'react-router-dom';
-import { Container, Box } from '@material-ui/core';
+import { Container} from '@material-ui/core';
 import { drizzleReactHooks} from '@drizzle/react-plugin';
-import {changeName} from './redux/action';
 import Feed from './components/Feed';
 import Home from './components/Home';
 import MyMind from './components/MyMind';
 import Profile from './components/Profile';
 import Header from "./components/Header";
+import {subscribeAllEntries} from './redux/action'
 import './App.css';
 
 
 function App() {
-  const { useDrizzle} = drizzleReactHooks;
+  const { useDrizzle, useDrizzleState} = drizzleReactHooks;
   const {drizzle} = useDrizzle();
+  const drizzleState = useDrizzleState(state => ({...state}))
 
-  const [input, setInput] = useState('init');
-  const handleChange = (event) => {
-    setInput(event.target.value)
-  }
-  const handleSubmit = () => {
-    drizzle.store.dispatch(changeName(input))
-  }
+
+
+  useEffect(() => {
+    if(drizzleState.drizzleStatus.initialized){
+    console.log("lance subscribe depuis useEffect")
+    drizzle.store.dispatch(subscribeAllEntries(drizzle))
+    }
+  }, [drizzleState.appStore.ui.nbMinds])
+
+
   return (
     <Container className="App" maxWidth="lg">
       <Header />
-      <Box>
-        <input type='text' value={input} onChange={handleChange}></input>
-        <button onClick={handleSubmit}>Click change name</button>
-      </Box>
+      
       <div className="mt-4">
         <Route exact path="/" component={Home} />
         <Route exact path="/Feed" component={Feed} />

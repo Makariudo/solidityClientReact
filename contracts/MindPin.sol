@@ -9,7 +9,7 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 contract MindPin is Ownable {
 
 //variables
-  uint private counter; 
+  uint public counter; 
   
   struct State {
     uint id;
